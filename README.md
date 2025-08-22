@@ -1,6 +1,7 @@
 Projeto: Trilha A – Dados & IA - Análise de Custos de Nuvem AWS
 
 📋 Descrição
+
 Este projeto, desenvolvido como parte da Trilha A – Dados & IA do ICT Itaú, cria um pipeline de ingestão e processamento de dados em Python a partir de dados públicos de custos de instâncias AWS. Inclui um modelo de machine learning (regressão linear) para prever custos (preço on-demand Linux por hora) e análise exploratória para identificar padrões de uso. O objetivo é suportar decisões estratégicas relacionadas a custos de nuvem.
 
 👤 Autor
