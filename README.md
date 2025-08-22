@@ -74,7 +74,6 @@ O pipeline demonstrou que:
 - A maioria das instâncias AWS atende workloads básicas, mas há nichos para alta performance (HPC, IA, rede intensiva).
 - A regressão linear prevê custos com alta precisão (R² de 0.93), validando CPU, memória e GPUs como drivers principais.
 - Armazenamento tem impacto negligenciável no preço on-demand, alinhado com a política de tarifação da AWS.
-- Os gráficos e o CSV tratado (`aws_pricing_tratado.csv`) fornecem uma base sólida para decisões estratégicas no ICT Itaú.
 
 🛠️ Tecnologias Utilizadas
 
