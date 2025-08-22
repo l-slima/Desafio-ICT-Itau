@@ -40,23 +40,3 @@ Gráficos: Disponíveis em images/ para comparação de previsões e análise de
 Linguagem: Python
 Bibliotecas: pandas, numpy, seaborn, matplotlib, scikit-learn
 Ferramentas: Jupyter Notebook, Git
-
-📝 Instruções de Uso
-
-Clone o repositório: git clone <URL_DO_REPOSITORIO>.
-Instale as dependências: pip install -r requirements.txt (crie um arquivo requirements.txt com as bibliotecas listadas).
-Execute pipeline_analysis.ipynb para processar os dados e gerar o CSV tratado.
-Execute ml_model.ipynb para treinar o modelo e visualizar os resultados.
-Verifique os gráficos na pasta images/.
-
-📌 Entregáveis
-
-Código-fonte comentado: Disponível nos notebooks pipeline_analysis.ipynb e ml_model.ipynb.
-Notebook: Explicações detalhadas e visualizações em ambos os notebooks.
-Arquivo .csv: aws_pricing_tratado.csv com dados tratados.
-Prints ou gráficos: Imagens geradas salvas em images/.
-
-🤝 Contribuições
-Contribuições são bem-vindas! Abra issues ou envie pull requests para sugerir melhorias, como adição de novos modelos (ex.: RandomForestRegressor) ou expansão do dataset.
-📖 Licença
-Este projeto é de uso interno do ICT Itaú. Para detalhes, consulte a equipe responsável.
