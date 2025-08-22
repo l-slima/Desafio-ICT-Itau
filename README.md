@@ -28,12 +28,51 @@ Análise Exploratória: Gera resumos estatísticos e visualizações (histograma
 Modelo de Machine Learning: Usa regressão linear para prever o preço on-demand Linux por hora, avaliado por R² e RMSE.
 Visualizações: Inclui gráficos de previsão vs real e importância de features.
 
-📊 Resultados
+## 📊 Resultados
+### Análise Exploratória
+- **Distribuição de Recursos:**
+  - **vCPUs:** Concentração em valores baixos (0-100), com uma cauda longa até 800 vCPUs, indicando instâncias de alta performance para HPC e big data.
+  - **Memória (memorySizeInGiB):** Maioria com até 5000 GiB, mas com extremos até 32 TiB, otimizadas para bancos de dados in-memory ou machine learning.
+  - **GPUs (gpuCount):** Predominância de 0 GPUs, com raros casos de até 8 GPUs, voltados para Deep Learning e renderização.
+  - **Memória Total de GPU (gpuTotalGpuMemoryInGiB):** Quase todas as instâncias têm 0 GiB, mas algumas alcançam 1400 GiB, ideais para modelos de IA grandes.
+  - **Interfaces de Rede (maxNetworkInterfaces):** Picos em 2-15 ENIs, com até 80 em instâncias de alta escalabilidade.
+- **Resumo Estatístico:**
+  - **vCPUs:** Média de 41.8, mediana de 16, máximo de 896.
+  - **Memória:** Média de 272.8 GiB, mediana de 96 GiB, máximo de 32 TiB.
+  - **Armazenamento:** Média de 2469.4 GB, mediana de 0 GB, máximo de 335 TB.
+  - **GPUs:** Média de 0.12, mediana de 0, máximo de 8.
+  - **ENIs:** Média de 8.3, mediana de 8, máximo de 80.
+- **Insights Iniciais:** A maioria das instâncias é básica (baixa CPU, memória moderada, sem GPU), mas há opções especializadas para computação intensa, IA e rede escalável.
 
-Resumo Estatístico: A maioria das instâncias tem 4-64 vCPUs, 96 GiB de memória (máx. 32 TiB), e poucas possuem GPUs (máx. 8 com 1.4 TB de memória).
-Modelo de Regressão: R² de 0.9303 e RMSE de 6.96, indicando alta precisão na previsão de custos.
-Importância de Features: gpuCount é o principal fator de custo, seguido por vCpus e memorySizeInGiB, com storageTotalSizeInGB tendo impacto mínimo.
-Gráficos: Disponíveis em images/ para comparação de previsões e análise de correlações.
+### Correlação com Preço On-Demand Linux
+- **vCPUs x Preço:** Correlação forte (0.77), destacando vCPUs como driver de custo.
+- **Memória RAM x Preço:** Correlação muito forte (0.94), sendo o fator mais determinante.
+- **Armazenamento x Preço:** Correlação fraca (0.14), indicando custo separado (via EBS).
+- **GPUs x Preço:** Correlação fraca (0.23), com impacto dependendo da família da instância.
+- **Conclusão da Correlação:** O preço é dominado por CPU e memória, enquanto armazenamento e GPUs têm influência secundária.
+
+### Modelo de Machine Learning
+- **Regressão Linear:**
+  - **Target:** Preço on-demand Linux por hora (`onDemandLinuxHr`).
+  - **Features:** `vCpus`, `memorySizeInGiB`, `storageTotalSizeInGB`, `gpuCount`.
+  - **Desempenho:**
+    - **R²:** 0.9303 (93% da variabilidade do preço explicada).
+    - **RMSE:** 6.96 (erro médio baixo em relação à escala dos preços).
+  - **Coeficientes:**
+    - `gpuCount`: 1.765 (maior impacto).
+    - `vCpus`: 0.0242.
+    - `memorySizeInGiB`: 0.0092.
+    - `storageTotalSizeInGB`: 0.000039 (mínimo impacto).
+- **Visualizações:**
+  - **Previsão vs Real:** Gráfico mostra proximidade entre valores previstos e reais, com linha de perfeição indicando boa acurácia.
+  - **Importância das Features:** `gpuCount` destaca-se como principal fator, seguido por `vCpus` e `memorySizeInGiB`, corroborando a análise de correlação.
+
+### Conclusão Geral dos Resultados
+O pipeline demonstrou que:
+- A maioria das instâncias AWS atende workloads básicas, mas há nichos para alta performance (HPC, IA, rede intensiva).
+- A regressão linear prevê custos com alta precisão (R² de 0.93), validando CPU, memória e GPUs como drivers principais.
+- Armazenamento tem impacto negligenciável no preço on-demand, alinhado com a política de tarifação da AWS.
+- Os gráficos e o CSV tratado (`aws_pricing_tratado.csv`) fornecem uma base sólida para decisões estratégicas no ICT Itaú.
 
 🛠️ Tecnologias Utilizadas
 
