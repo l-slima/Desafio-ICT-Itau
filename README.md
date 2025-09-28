@@ -1,82 +1,97 @@
-Projeto: Trilha A – Dados & IA - Análise de Custos de Nuvem AWS
+# Project: Track A – Data & AI - AWS Cloud Cost Analysis
 
-📋 Descrição
+📋 **Description**
 
-Este projeto, desenvolvido como parte da Trilha A – Dados & IA do ICT Itaú, cria um pipeline de ingestão e processamento de dados em Python a partir de dados públicos de custos de instâncias AWS. Inclui um modelo de machine learning (regressão linear) para prever custos (preço on-demand Linux por hora) e análise exploratória para identificar padrões de uso. O objetivo é suportar decisões estratégicas relacionadas a custos de nuvem.
+This project, developed as part of Track A – Data & AI of ICT Itaú, creates a data ingestion and processing pipeline in Python using public AWS instance pricing data. It includes a machine learning model (linear regression) to predict costs (Linux on-demand price per hour) and exploratory analysis to identify usage patterns. The goal is to support strategic decision-making related to cloud costs.
 
-👤 Autor
+👤 **Author**
 
-Nome: Lucas de Souza Lima 
+Name: Lucas de Souza Lima
 
-🎯 Objetivos
+🎯 **Objectives**
 
-Desenvolver um pipeline para ingerir, tratar e analisar dados de preços de instâncias AWS.
-Aplicar regressão linear para prever custos com base em recursos como vCPUs, memória, armazenamento e GPUs.
-Realizar análise exploratória com visualizações e estatísticas descritivas.
-Gerar entregáveis conforme especificado (código comentado, notebook, CSV tratado, gráficos).
+* Develop a pipeline to ingest, clean, and analyze AWS instance pricing data.
+* Apply linear regression to predict costs based on resources such as vCPUs, memory, storage, and GPUs.
+* Perform exploratory data analysis with visualizations and descriptive statistics.
+* Generate deliverables as specified (commented code, notebook, processed CSV, plots).
 
-📂 Estrutura do Projeto
+📂 **Project Structure**
 
-Pipeline_Lucas_Lima.ipynb: Notebook Jupyter com o pipeline de ingestão, tratamento de dados, análise exploratória e visualizações.
-regressão.ipynb: Notebook com o modelo de machine learning (regressão linear) e avaliação.
-aws_pricing_tratado.csv: Arquivo CSV contendo os dados tratados após processamento.
-images/: Diretório com gráficos gerados (ex.: Previsão vs Real, Importância das Features).
-README.md: Este arquivo com documentação do projeto.
+* `Pipeline_Lucas_Lima.ipynb`: Jupyter Notebook with the ingestion pipeline, data cleaning, exploratory analysis, and visualizations.
+* `regressão.ipynb`: Notebook with the machine learning model (linear regression) and evaluation.
+* `aws_pricing_tratado.csv`: CSV file containing processed data after cleaning.
+* `images/`: Directory with generated plots (e.g., Prediction vs Actual, Feature Importance).
+* `README.md`: This documentation file.
 
-🚀 Funcionalidades
+🚀 **Functionalities**
 
-Ingestão e Tratamento: Carrega e trata dados ausentes do dataset AWS, salvando em aws_pricing_tratado.csv.
-Análise Exploratória: Gera resumos estatísticos e visualizações (histogramas, correlações) para recursos como vCPUs, memória e GPUs.
-Modelo de Machine Learning: Usa regressão linear para prever o preço on-demand Linux por hora, avaliado por R² e RMSE.
-Visualizações: Inclui gráficos de previsão vs real e importância de features.
+* **Ingestion & Processing**: Loads and cleans missing values from the AWS dataset, saving results to `aws_pricing_tratado.csv`.
+* **Exploratory Analysis**: Generates statistical summaries and visualizations (histograms, correlations) for resources such as vCPUs, memory, and GPUs.
+* **Machine Learning Model**: Uses linear regression to predict Linux on-demand hourly price, evaluated with R² and RMSE.
+* **Visualizations**: Includes prediction vs actual plots and feature importance charts.
 
-## 📊 Resultados
-### Análise Exploratória
-- **Distribuição de Recursos:**
-  - **vCPUs:** Concentração em valores baixos (0-100), com uma cauda longa até 800 vCPUs, indicando instâncias de alta performance para HPC e big data.
-  - **Memória (memorySizeInGiB):** Maioria com até 5000 GiB, mas com extremos até 32 TiB, otimizadas para bancos de dados in-memory ou machine learning.
-  - **GPUs (gpuCount):** Predominância de 0 GPUs, com raros casos de até 8 GPUs, voltados para Deep Learning e renderização.
-  - **Memória Total de GPU (gpuTotalGpuMemoryInGiB):** Quase todas as instâncias têm 0 GiB, mas algumas alcançam 1400 GiB, ideais para modelos de IA grandes.
-  - **Interfaces de Rede (maxNetworkInterfaces):** Picos em 2-15 ENIs, com até 80 em instâncias de alta escalabilidade.
-- **Resumo Estatístico:**
-  - **vCPUs:** Média de 41.8, mediana de 16, máximo de 896.
-  - **Memória:** Média de 272.8 GiB, mediana de 96 GiB, máximo de 32 TiB.
-  - **Armazenamento:** Média de 2469.4 GB, mediana de 0 GB, máximo de 335 TB.
-  - **GPUs:** Média de 0.12, mediana de 0, máximo de 8.
-  - **ENIs:** Média de 8.3, mediana de 8, máximo de 80.
-- **Insights Iniciais:** A maioria das instâncias é básica (baixa CPU, memória moderada, sem GPU), mas há opções especializadas para computação intensa, IA e rede escalável.
+## 📊 Results
 
-### Correlação com Preço On-Demand Linux
-- **vCPUs x Preço:** Correlação forte (0.77), destacando vCPUs como driver de custo.
-- **Memória RAM x Preço:** Correlação muito forte (0.94), sendo o fator mais determinante.
-- **Armazenamento x Preço:** Correlação fraca (0.14), indicando custo separado (via EBS).
-- **GPUs x Preço:** Correlação fraca (0.23), com impacto dependendo da família da instância.
-- **Conclusão da Correlação:** O preço é dominado por CPU e memória, enquanto armazenamento e GPUs têm influência secundária.
+### Exploratory Analysis
 
-### Modelo de Machine Learning
-- **Regressão Linear:**
-  - **Target:** Preço on-demand Linux por hora (`onDemandLinuxHr`).
-  - **Features:** `vCpus`, `memorySizeInGiB`, `storageTotalSizeInGB`, `gpuCount`.
-  - **Desempenho:**
-    - **R²:** 0.9303 (93% da variabilidade do preço explicada).
-    - **RMSE:** 6.96 (erro médio baixo em relação à escala dos preços).
-  - **Coeficientes:**
-    - `gpuCount`: 1.765 (maior impacto).
-    - `vCpus`: 0.0242.
-    - `memorySizeInGiB`: 0.0092.
-    - `storageTotalSizeInGB`: 0.000039 (mínimo impacto).
-- **Visualizações:**
-  - **Previsão vs Real:** Gráfico mostra proximidade entre valores previstos e reais, com linha de perfeição indicando boa acurácia.
-  - **Importância das Features:** `gpuCount` destaca-se como principal fator, seguido por `vCpus` e `memorySizeInGiB`, corroborando a análise de correlação.
+* **Resource Distribution:**
 
-### Conclusão Geral dos Resultados
-O pipeline demonstrou que:
-- A maioria das instâncias AWS atende workloads básicas, mas há nichos para alta performance (HPC, IA, rede intensiva).
-- A regressão linear prevê custos com alta precisão (R² de 0.93), validando CPU, memória e GPUs como drivers principais.
-- Armazenamento tem impacto negligenciável no preço on-demand, alinhado com a política de tarifação da AWS.
+  * **vCPUs:** Concentrated in lower values (0–100), with a long tail up to 800 vCPUs, indicating high-performance instances for HPC and big data.
+  * **Memory (memorySizeInGiB):** Mostly up to 5,000 GiB, but with extremes reaching 32 TiB, optimized for in-memory databases and machine learning.
+  * **GPUs (gpuCount):** Predominantly 0 GPUs, with rare cases up to 8 GPUs, targeted at Deep Learning and rendering workloads.
+  * **Total GPU Memory (gpuTotalGpuMemoryInGiB):** Almost all instances have 0 GiB, but some reach 1,400 GiB, suitable for large AI models.
+  * **Network Interfaces (maxNetworkInterfaces):** Peaks between 2–15 ENIs, with up to 80 in highly scalable instances.
 
-🛠️ Tecnologias Utilizadas
+* **Statistical Summary:**
 
-Linguagem: Python
-Bibliotecas: pandas, numpy, seaborn, matplotlib, scikit-learn
-Ferramentas: Jupyter Notebook, Git
+  * **vCPUs:** Mean 41.8, median 16, max 896.
+  * **Memory:** Mean 272.8 GiB, median 96 GiB, max 32 TiB.
+  * **Storage:** Mean 2,469.4 GB, median 0 GB, max 335 TB.
+  * **GPUs:** Mean 0.12, median 0, max 8.
+  * **ENIs:** Mean 8.3, median 8, max 80.
+
+* **Initial Insights:** Most instances are basic (low CPU, moderate memory, no GPU), but there are specialized options for intensive computing, AI, and scalable networking.
+
+### Correlation with Linux On-Demand Price
+
+* **vCPUs vs Price:** Strong correlation (0.77), highlighting vCPUs as a cost driver.
+* **RAM vs Price:** Very strong correlation (0.94), the most determining factor.
+* **Storage vs Price:** Weak correlation (0.14), indicating costs are mostly separate (via EBS).
+* **GPUs vs Price:** Weak correlation (0.23), with impact depending on the instance family.
+* **Correlation Conclusion:** Pricing is dominated by CPU and memory, while storage and GPUs have secondary influence.
+
+### Machine Learning Model
+
+* **Linear Regression:**
+
+  * **Target:** Linux on-demand hourly price (`onDemandLinuxHr`).
+  * **Features:** `vCpus`, `memorySizeInGiB`, `storageTotalSizeInGB`, `gpuCount`.
+  * **Performance:**
+
+    * **R²:** 0.9303 (93% of price variability explained).
+    * **RMSE:** 6.96 (low average error relative to price scale).
+  * **Coefficients:**
+
+    * `gpuCount`: 1.765 (highest impact).
+    * `vCpus`: 0.0242.
+    * `memorySizeInGiB`: 0.0092.
+    * `storageTotalSizeInGB`: 0.000039 (minimal impact).
+
+* **Visualizations:**
+
+  * **Prediction vs Actual:** Plot shows close alignment between predicted and actual values, with the perfection line indicating good accuracy.
+  * **Feature Importance:** `gpuCount` stands out as the main driver, followed by `vCpus` and `memorySizeInGiB`, confirming the correlation analysis.
+
+### Overall Conclusion of Results
+
+The pipeline demonstrated that:
+
+* Most AWS instances serve basic workloads, but there are niches for high-performance (HPC, AI, intensive networking).
+* Linear regression predicts costs with high accuracy (R² = 0.93), validating CPU, memory, and GPUs as primary cost drivers.
+* Storage has negligible impact on on-demand pricing, aligned with AWS’s billing policies.
+
+🛠️ **Technologies Used**
+
+* **Language:** Python
+* **Libraries:** pandas, numpy, seaborn, matplotlib, scikit-learn
+* **Tools:** Jupyter Notebook, Git
